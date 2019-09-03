@@ -28,8 +28,28 @@ public class Trader {
     public static final int GENERATIONS = 2000;
     public static final int POPULATION_SIZE = 50;
     public static final int INIT_TREE_SIZE = 30;
-    private static Map<String, Decision> cachedTickPredict = new HashMap<>();
+    private static Map<String, Decision2> cachedTickPredict = new HashMap<>();
     private static Map<String, List<Candle>> latestStockDataMap = new HashMap<>();
+    
+    public static final class Decision2 {
+    	private String trend;
+    	private double confidence;
+    	
+    	public Decision2(){}
+    	public Decision2(String  d, double conf) {
+    		trend = d;
+    		confidence = conf;
+    	}
+
+		public String getTrend() {
+			return trend;
+		}
+
+		public double getConfidence() {
+			return confidence;
+		}
+    	
+    }
     
     public Trader() {
 		new Thread(new Runnable() {
@@ -76,7 +96,7 @@ public class Trader {
     }
     
     //return stock tomorrow trend signal. 0:down; 1:up
-    public Decision predictStockTrend(String symbol) {
+    public Decision2 predictStockTrend(String symbol) {
 		return cachedTickPredict.get(symbol);
 	}
     
@@ -240,9 +260,10 @@ public class Trader {
         	}
         	System.out.println("["+symbol+"]"+" testAccuracy:"+(truePredict*100.0/l)+"%");
         	d.setConfidence(truePredict*1.0/l);
-        	cachedTickPredict.put(symbol, d);
+        	Decision2 dd = new Decision2(d==Decision.BUY?"up":"down", truePredict*1.0/l);
+        	cachedTickPredict.put(symbol, dd);
         }
-       
+
     }
     
     private static void simulate(List<Genome> population, List<List<Candle>> stockdata){

@@ -16,8 +16,8 @@ import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.nus.stock.gatrader.biz.Decision;
 import com.nus.stock.gatrader.biz.Trader;
+import com.nus.stock.gatrader.biz.Trader.Decision2;
 import com.nus.stock.util.JacksonUtils;
 import com.nus.stock.util.Json2Obj;
 import com.nus.stock.util.Logger4j;
@@ -76,9 +76,9 @@ public class StockPredictRestService {
 		}
          
     	Map<String, Object> resultMap = new HashMap<String, Object>();
-    	Decision decision = trader.predictStockTrend(symbol);
+    	Decision2 decision = trader.predictStockTrend(symbol);
     	if (decision != null) {
-    		String trendString = (decision==Decision.BUY) ? "up" : "down";
+    		String trendString = decision.getTrend();//(decision==Decision.BUY) ? "up" : "down";
         	double confidence = decision.getConfidence();
         	resultMap.put("trend", trendString);
         	resultMap.put("confidence", confidence);
