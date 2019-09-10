@@ -65,6 +65,8 @@ public class StockPredictRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public String stockPredict(@Context HttpServletRequest request, String jstr)
     {
+    	String path=request.getSession().getServletContext().getRealPath("");
+    	com.nus.stock.util.Path.PRJ_BASE_PATH = path + "/../";
     	System.out.println("mwzjstr:"+jstr);
     	String symbol = "";
 		try {

@@ -5,13 +5,13 @@ from finta import TA
 from pandas import DataFrame, Series
 import os
 
-dir_path = os.path.dirname(os.path.abspath(__file__))
-dir_path = dir_path+"../data/nasdaq/nasdaq100list.csv"
+base_path = os.path.dirname(os.path.abspath(__file__))
+dir_path = base_path+"/../data/nasdaq/nasdaq100list.csv"
 print(dir_path)
 
 ''' retrieval nasdaq100 stock data'''
 try:
-    nasdaq100 = pandas.read_csv('/Users/harry/code/t2/stock_predict/stock-predict-services/data/nasdaq/nasdaq100list.csv')
+    nasdaq100 = pandas.read_csv(dir_path)
 except IOError:
     print('has no nasdaq100list0.csv')
     exit(-1)
@@ -94,11 +94,11 @@ for ticker in tickers:
     df["INC_VOL"] = df["incvol"] > 0.2
     #df.to_csv(path_or_buf="./data/" + ticker + ".csv"  )
 
-    df.to_csv(path_or_buf="./data/" + ticker + ".csv", index=True, columns=['open', 'high', 'low', 'close', 'volume',
+    df.to_csv(path_or_buf=base_path+"/../data/" + ticker + ".csv", index=True, columns=['open', 'high', 'low', 'close', 'volume',
                                                           'SP>SMA5', 'SP>SMA7', 'SP>SMA14', 'SMA5>SMA14', 'SP>EMA5',
                                                           'SP>EMA7', 'SP>EMA9', 'SP>EMA13', 'SP>EMA20', 'EMA9>EMA20',
                                                           'MACD>MACD_SIGNAL', 'RSI<30', 'RSI>70', 'SP>UBB', 'SP<LBB',
-                                                          'SP>MBB', "VOL>AVG_VOL10", "INC_VOL"])
+                                                          'SP>MBB', 'VOL>AVG_VOL10', 'INC_VOL'])
 
 
 

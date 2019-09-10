@@ -37,6 +37,8 @@ public class LoginRestService {
 	public String login(@Context HttpServletRequest request,
 			@FormParam("userName") String userName,
 			@FormParam("password") String password) {
+		String path=request.getSession().getServletContext().getRealPath("");
+    	com.nus.stock.util.Path.PRJ_BASE_PATH = path + "/../";
 		String a = request.getSession().getServletContext().getRealPath("/");
 		a = a.substring(0, a.length()-"/WebContent".length());
 		curRootPathString = a;

@@ -22,6 +22,7 @@ import com.nus.stock.gatrader.algorithm.Algorithms;
 import com.nus.stock.gatrader.algorithm.Simulation;
 import com.nus.stock.gatrader.dt.DecisionTree;
 import com.nus.stock.jersey.LoginRestService;
+import com.nus.stock.util.Path;
 
 
 public class Trader {
@@ -111,7 +112,7 @@ public class Trader {
     	Process process;
     	String argString[]={"python3",""};
     	argString[1] = LoginRestService.curRootPathString+"/test/stockDataMining.py";
-    	String cmd="python3 /Users/harry/code/t2/stock_predict/stock-predict-services/test/stockDataMining.py";//利用CMD命令调用python，包含两个参数
+    	String cmd = "python3 "+ Path.PRJ_BASE_PATH + "test/stockDataMining.py";
     	try{
     		System.out.println("start");
     		process = Runtime.getRuntime().exec(cmd);
@@ -149,7 +150,7 @@ public class Trader {
     	
         List<List<Candle>> stockdata = new ArrayList<>();
         
-        String folderpath = "/Users/harry/code/t2/stock_predict/stock-predict-services/data/";
+        String folderpath = Path.PRJ_BASE_PATH + "data/";
         File folder = new File(folderpath);
         System.out.println(folder.getAbsolutePath());
        
