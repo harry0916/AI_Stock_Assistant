@@ -101,9 +101,26 @@ public class Trader {
 		return cachedTickPredict.get(symbol);
 	}
     
-    public List<String> getHistoryData(String symbol) {
-		List<String> retList = new ArrayList<>();
-		
+    public Map<String, String> getHistoryData(String symbol) {
+    	Map<String, String> retList = new HashMap<String, String>();
+        String path = Path.PRJ_BASE_PATH + "data/"+symbol+".csv";
+    	System.out.println("mwz getHistoryData..."+path);
+
+        try {
+        	List<String> lineStrings = Files.readAllLines(Paths.get(path));
+        	lineStrings.remove(0);
+        	int len = lineStrings.size();
+        
+        	for (int i = len-30; i < len; i++) {
+        		String line = (String) lineStrings.get(i);
+				Candle c = getCandle(line);
+                retList.put(c.getDatetime(), c.getClose()+"");
+        	}           
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
 		return retList;
 	}
     

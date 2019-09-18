@@ -100,10 +100,17 @@ public class StockPredictRestService {
     public String stockHistory(@Context HttpServletRequest request,String jstr)
     {
     	System.out.println("mwzjstr:"+jstr);
-    	StockHistory s = (StockHistory) Json2Obj.getObj(jstr, StockHistory.class);
-    	System.out.println(s.toString());
-    	Map<String, Object> resultMap = new HashMap<String, Object>();
-    	trader.getHistoryData("");
+//    	StockHistory s = (StockHistory) Json2Obj.getObj(jstr, StockHistory.class);
+//    	System.out.println(s.toString());
+    	String symbol = "";
+		try {
+			JSONObject obj = new JSONObject(jstr);
+	        symbol = obj.getJSONObject("data").getString("symbol");
+	        System.out.println("mwzsymbol "+symbol);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		Map<String, String> resultMap = trader.getHistoryData(symbol);
     	String ret =  JacksonUtils.getJsonString(resultMap);
         System.out.println("mwz--"+ret);
         return ret;
